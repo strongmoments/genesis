@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 @Repository
+
 public interface StorageTypeRepo extends JpaRepository<StorageType,Long> {
 	
 	@Query("Select c from Storage_type c where c.storageTypeName = :storageTypeName ")

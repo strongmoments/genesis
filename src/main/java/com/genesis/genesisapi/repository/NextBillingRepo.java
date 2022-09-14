@@ -9,11 +9,12 @@ import com.genesis.genesisapi.model.WSOInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
-
+@Repository
 public interface NextBillingRepo extends JpaRepository<TallySheet,Long> {
 	@Query(value = "SELECT client_info_client_info_id FROM genesis.client_storage_info where storage_start_date < (SELECT DATE_ADD(LAST_DAY(curdate()),INTERVAL 1 DAY)) and storage_end_date>(LAST_DAY(DATE_ADD(LAST_DAY(curdate()),INTERVAL 1 DAY))) ;", nativeQuery = true)
 	List<BigInteger> getClientStorageInfoOfNextMonth();

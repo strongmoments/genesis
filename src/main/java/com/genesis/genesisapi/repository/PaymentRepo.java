@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.genesis.genesisapi.model.Payment;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface PaymentRepo extends JpaRepository<Payment, Long> {
 
 	@Query("Select p from payment p where p.billing.billingId = :billId")

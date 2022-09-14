@@ -9,7 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.genesis.genesisapi.model.DeliveryList;
 import com.genesis.genesisapi.model.WSOInfo;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface WSOInfoRepo extends JpaRepository<WSOInfo,Long> {
 
     List<WSOInfo> findByisDeleted(Boolean isDeleted);
