@@ -42,12 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-    
+
  
      @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //auth.authenticationProvider(preAuthenticatedAuthenticationProvider);
        auth.authenticationProvider(authenticationProvider);
+
+
        // auth.inMemoryAuthentication().withUser("vikash").password("123").roles("USER");
     }
 

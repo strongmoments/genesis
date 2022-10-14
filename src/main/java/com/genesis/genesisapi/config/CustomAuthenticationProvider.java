@@ -17,6 +17,9 @@ import org.springframework.stereotype.Component;
 
 @Component("authenticationProvider")
 public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
+
+	@Autowired
+	private CustomPasswordEncoder customPasswordEncoder;
 		@Autowired
 	    @Qualifier("userModelServiceBean")
 	    @Override
@@ -24,17 +27,12 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 	        super.setUserDetailsService(userDetailsService);
 	    }
 		
-		/*@Autowired
+		@Autowired
 		@Qualifier("custPasswordEncoder")
 		public void setPasswordEncoder(CustomSha1Encoder passwordEncoder) {
-			super.setPasswordEncoder(passwordEncoder);
+			super.setPasswordEncoder(customPasswordEncoder);
 		}
-		//@Autowired
-		//@Qualifier("custSaltSource")
-		/*@Override
-		public void setSaltSource(SaltSource saltSource) {
-			super.setSaltSource(saltSource);
-		}*/
+
 		
 	    @Autowired
 		private MessageSource messageSource;
