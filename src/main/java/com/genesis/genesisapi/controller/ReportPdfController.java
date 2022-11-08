@@ -14,6 +14,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -95,7 +97,7 @@ public class ReportPdfController {
 		 @PathVariable("fileType") String fileType) throws JRException, IOException {
 	 JasperPrint p1 = new JasperPrint();
 	 DecimalFormat df = new DecimalFormat("###.##");
-	 JRXlsExporter xlsExporter = new JRXlsExporter();
+	 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 	 List<WsolotReport> listWsolot = new ArrayList<WsolotReport>();
 	 List<LotInfo> lotdataList = lotInfoRepo.findLotByWsoId(wsoId);
 	 logger.info("Records successfully retrieved from Lot Info table based on WSO Id.");
@@ -177,7 +179,7 @@ public class ReportPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -205,7 +207,7 @@ public class ReportPdfController {
 	 List<DeliverylistReport> listDeliverylist = new ArrayList<DeliverylistReport>();
 	 DecimalFormat df = new DecimalFormat("###.##");
 	 JasperPrint p1 = new JasperPrint();
-	 JRXlsExporter xlsExporter = new JRXlsExporter();
+	 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 	 DeliveryList  dataList = deliveryListRepo.findById(dlId).get();
 	 logger.info("Records successfully retrieved from Delivery List based on dlId");
 	 
@@ -283,7 +285,7 @@ public class ReportPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -311,7 +313,7 @@ public class ReportPdfController {
 		 @PathVariable("fileType") String fileType) throws JRException, IOException {
 	 List<TallysheetReport> listTally = new ArrayList<TallysheetReport>();
 	 DecimalFormat df = new DecimalFormat("###.##");
-	 JRXlsExporter xlsExporter = new JRXlsExporter();
+	 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 	 JasperPrint p1 = new JasperPrint();
 	 Float ttlWsoQuantity = 0.0f;
      List<LotInfo> lotDataList = null;
@@ -404,7 +406,7 @@ public class ReportPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");

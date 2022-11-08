@@ -19,6 +19,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -110,7 +112,8 @@ public class OtherReportPdfController {
 		 Double grandCreditGst = 0.0;
 		 Date fromDate1 = null;
 		 Date toDate1 = null;
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
+		// JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 
 		 try {
 				fromDate1 = new SimpleDateFormat("yyyy-MM-dd").parse(fromdate);
@@ -244,7 +247,7 @@ public class OtherReportPdfController {
 	            configuration.setOnePagePerSheet(false);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -272,7 +275,7 @@ public class OtherReportPdfController {
 			 @PathVariable("todate") String todate) throws JRException, IOException, NoSuchFieldException, SecurityException {
 		 DecimalFormat df = new DecimalFormat("###.##");
 		 List<DateInventoryReport> listdate = new ArrayList<DateInventoryReport>();
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 Date toDate1 = null;
 	
 		try {
@@ -367,7 +370,7 @@ public class OtherReportPdfController {
 	            configuration.setOnePagePerSheet(false);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -396,7 +399,7 @@ public class OtherReportPdfController {
 			 @PathVariable("clientId") Long clientId) throws JRException, IOException, NoSuchFieldException, SecurityException {
 		 DecimalFormat df = new DecimalFormat("###.##");
 		 List<OutstandingBillReport> listout = new ArrayList<OutstandingBillReport>();
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 ClientInfo clientInfo = clientRepo.findByCientId(clientId);
 	        
 	        List<Object> billingdata = billingRepo.getBillingInfoByCLientIdGroup(clientId);
@@ -502,7 +505,7 @@ public class OtherReportPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");

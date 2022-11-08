@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -74,7 +75,7 @@ public class PrintPdfController {
 		 @PathVariable("invoiceNo") String invoiceNo) throws JRException, IOException {
 	 logger.info("common downloader() called.");
 	 JRXlsxExporter xlsExporter = new JRXlsxExporter();
-	// JRXlsExporter xlsExporter = new JRXlsExporter();
+	// JRXlsxExporter xlsExporter = new JRXlsxExporter();
 	 List<CommonBilling> listCommon = new ArrayList<CommonBilling>();
 	 List<Billing> data = billingRepo.getBillDetailByInvoiceNum(invoiceNo);
 	 Double totalAmount = 0.0;
@@ -165,7 +166,7 @@ public class PrintPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-           // xlsExporter.setConfiguration(configuration);
+			xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -192,7 +193,7 @@ public class PrintPdfController {
 		 @PathVariable("invoiceNo") String invoiceNo) throws JRException, IOException, ParseException {
 	 List<leaseBilling> listLease = new ArrayList<leaseBilling>();
 	 //String invoiceNo = "I0002";
-	 JRXlsExporter xlsExporter = new JRXlsExporter();
+	 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 	 List<Billing> data = billingRepo.getBillDetailByInvoiceNum(invoiceNo);
 	 Double totalAmount = 0.00;
 	 for(Billing model : data) {
@@ -268,7 +269,7 @@ public class PrintPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -294,7 +295,7 @@ public class PrintPdfController {
 		 @PathVariable("fileType") String fileType, 
 		 @PathVariable("invoiceNo") String invoiceNo) throws JRException, IOException {
 	 List<OtherChargesBilling> listOther = new ArrayList<OtherChargesBilling>();
-	 JRXlsExporter xlsExporter = new JRXlsExporter();
+	 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 	 List<Billing> data = billingRepo.getBillDetailByInvoiceNum(invoiceNo);
 	 logger.info("Records successfully retrieved from Billing table based on Invoice No");
 	 
@@ -364,7 +365,7 @@ public class PrintPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");

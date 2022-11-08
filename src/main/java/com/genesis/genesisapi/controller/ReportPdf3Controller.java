@@ -15,6 +15,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -119,7 +121,7 @@ public class ReportPdf3Controller {
 			e.printStackTrace();
 		}
 		JasperPrint p1 = new JasperPrint();
-		JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
     	System.out.println("fromDate"+fromDate+" toDate"+toDate);
 
     	String storageType = "";
@@ -307,7 +309,7 @@ public class ReportPdf3Controller {
                configuration.setOnePagePerSheet(false);
                configuration.setDetectCellType(true);
                configuration.setCollapseRowSpan(false);
-               xlsExporter.setConfiguration(configuration);
+               xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
                xlsExporter.exportReport();
                
                String downloadFolder = context.getRealPath("/WEB-INF/");

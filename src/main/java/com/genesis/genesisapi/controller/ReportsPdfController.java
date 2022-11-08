@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContext;
@@ -111,7 +114,7 @@ public class ReportsPdfController {
 		List<List<soaCurrent>> list2 = new ArrayList<List<soaCurrent>>();
 		List<soaCurrent> listCurrent = new ArrayList<soaCurrent>();
 		List<ClientDetails> listClient = new ArrayList<ClientDetails>();
-		JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 		//List<Object> listJasper = new ArrayList<Object>();
 		List<ClientInfo> clientInfo = clientRepo.getClientBetweenClient(fromClientInfo, toClientInfo);
@@ -354,7 +357,7 @@ public class ReportsPdfController {
             //configuration.setSheetNames(sheetName);
             configuration.setRemoveEmptySpaceBetweenRows(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -389,7 +392,7 @@ public class ReportsPdfController {
 		Boolean check = true;
 		JasperPrint p1 = new JasperPrint();
 		JRPdfExporter exp = new JRPdfExporter();
-		JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 		
 		List<List<DeliveryReport>> list = new ArrayList<List<DeliveryReport>>();
@@ -520,7 +523,7 @@ public class ReportsPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -555,7 +558,7 @@ public class ReportsPdfController {
 			Boolean printReport = false;
 			JasperPrint p1 = new JasperPrint();
 			JRPdfExporter exp = new JRPdfExporter();
-			JRXlsExporter xlsExporter = new JRXlsExporter();
+			JRXlsxExporter xlsExporter = new JRXlsxExporter();
 			
 			List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 			//List<Object> listJasper = new ArrayList<Object>();
@@ -749,7 +752,7 @@ public class ReportsPdfController {
 	            configuration.setOnePagePerSheet(false);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");

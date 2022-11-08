@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +114,7 @@ public class SendPdfByEmailController {
 		 String userName = (String) httpSession.getAttribute("userId");
 		 logger.info("UserName:"+userName+" Email Id: "+userEmail);
 		 logger.info("common downloader() called.");
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 List<CommonBilling> listCommon = new ArrayList<CommonBilling>();
 		 List<Billing> data = billingRepo.getBillDetailByInvoiceNum(invoiceNo);
 		 Double totalAmount = 0.0;
@@ -217,7 +219,7 @@ public class SendPdfByEmailController {
 	            configuration.setOnePagePerSheet(true);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -248,7 +250,7 @@ public class SendPdfByEmailController {
 		 String userName = (String) httpSession.getAttribute("userId");
 		 List<leaseBilling> listLease = new ArrayList<leaseBilling>();
 		 //String invoiceNo = "I0002";
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 List<Billing> data = billingRepo.getBillDetailByInvoiceNum(invoiceNo);
 		 logger.info("Records successfully retrieved from Billing table based on Invoice Number");
 		 Double totalAmount = 0.00;
@@ -341,7 +343,7 @@ public class SendPdfByEmailController {
 	            configuration.setOnePagePerSheet(true);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -370,7 +372,7 @@ public class SendPdfByEmailController {
 		 String userEmail = (String) httpSession.getAttribute("emailId");
 		 String userName = (String) httpSession.getAttribute("userId");
 		 List<OtherChargesBilling> listOther = new ArrayList<OtherChargesBilling>();
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 List<Billing> data = billingRepo.getBillDetailByInvoiceNum(invoiceNo);
 		 logger.info("Records successfully retrieved from Billing based on Invoice No.");
 		 Double totalAmount = 0.0;
@@ -452,7 +454,7 @@ public class SendPdfByEmailController {
 	            configuration.setOnePagePerSheet(true);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");

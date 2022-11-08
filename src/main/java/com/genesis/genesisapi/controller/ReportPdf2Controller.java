@@ -15,6 +15,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -125,7 +127,7 @@ public class ReportPdf2Controller {
 		Boolean printReport = false;
 		JasperPrint p1 = new JasperPrint();
 		JRPdfExporter exp = new JRPdfExporter();
-		JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		
 		List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 		JasperPrint listJasper1 = new JasperPrint();
@@ -378,7 +380,7 @@ public class ReportPdf2Controller {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -442,7 +444,7 @@ public class ReportPdf2Controller {
                configuration.setOnePagePerSheet(false);
                configuration.setDetectCellType(true);
                configuration.setCollapseRowSpan(false);
-               xlsExporter.setConfiguration(configuration);
+               xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
                xlsExporter.exportReport();
                
                String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -478,7 +480,7 @@ public class ReportPdf2Controller {
 			e.printStackTrace();
 		}
 		JasperPrint p1 = new JasperPrint();
-		JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
     	System.out.println("clientId"+clientId+" fromDate"+fromDate+" toDate"+toDate);
 
     	List<Object> data = billingRepo.getBillingInfoByCLientIdAndBetweenDatesForInvList(clientId, fromDate, toDate);
@@ -559,7 +561,7 @@ public class ReportPdf2Controller {
                configuration.setOnePagePerSheet(false);
                configuration.setDetectCellType(true);
                configuration.setCollapseRowSpan(false);
-               xlsExporter.setConfiguration(configuration);
+               xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
                xlsExporter.exportReport();
                
                String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -597,7 +599,7 @@ public class ReportPdf2Controller {
 		Boolean printReport = false;
 		JasperPrint p1 = new JasperPrint();
 		JRPdfExporter exp = new JRPdfExporter();
-		JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		
 		List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 		JasperPrint listJasper1 = new JasperPrint();
@@ -761,7 +763,7 @@ public class ReportPdf2Controller {
                configuration.setOnePagePerSheet(false);
                configuration.setDetectCellType(true);
                configuration.setCollapseRowSpan(false);
-               xlsExporter.setConfiguration(configuration);
+               xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
                xlsExporter.exportReport();
                
                String downloadFolder = context.getRealPath("/WEB-INF/");

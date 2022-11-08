@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.XlsxReportConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -139,7 +141,7 @@ public class EmailPdfController {
 		 Double grandCreditGst = 0.0;
 		 Date fromDate1 = null;
 		 Date toDate1 = null;
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 
 		 try {
 				fromDate1 = new SimpleDateFormat("yyyy-MM-dd").parse(fromdate);
@@ -257,7 +259,7 @@ public class EmailPdfController {
 	            configuration.setOnePagePerSheet(true);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -309,7 +311,7 @@ public class EmailPdfController {
 		 String userName = (String) httpSession.getAttribute("userId");
 		 DecimalFormat df = new DecimalFormat("###.##");
 		 List<DateInventoryReport> listdate = new ArrayList<DateInventoryReport>();
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 Date toDate1 = null;
 	
 		try {
@@ -404,7 +406,7 @@ public class EmailPdfController {
 	            configuration.setOnePagePerSheet(true);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -456,7 +458,7 @@ public class EmailPdfController {
 		 String userName = (String) httpSession.getAttribute("userId");
 		 DecimalFormat df = new DecimalFormat("###.##");
 		 List<OutstandingBillReport> listout = new ArrayList<OutstandingBillReport>();
-		 JRXlsExporter xlsExporter = new JRXlsExporter();
+		 JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		 ClientInfo clientInfo = clientRepo.findByCientId(clientId);
 	     logger.info("Records successfully retrieved from Client Info table on the basis of client Id");   
 	     
@@ -565,7 +567,7 @@ public class EmailPdfController {
            configuration.setOnePagePerSheet(true);
            configuration.setDetectCellType(true);
            configuration.setCollapseRowSpan(false);
-           xlsExporter.setConfiguration(configuration);
+           xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
            xlsExporter.exportReport();
            
            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -626,7 +628,7 @@ public class EmailPdfController {
 		List<List<soaCurrent>> list2 = new ArrayList<List<soaCurrent>>();
 		List<soaCurrent> listCurrent = new ArrayList<soaCurrent>();
 		List<ClientDetails> listClient = new ArrayList<ClientDetails>();
-		JRXlsExporter xlsExporter = new JRXlsExporter();
+		JRXlsxExporter xlsExporter = new JRXlsxExporter();
 		List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 		//List<Object> listJasper = new ArrayList<Object>();
 		List<ClientInfo> clientInfo = clientRepo.getClientBetweenClient(fromClientInfo, toClientInfo);
@@ -851,7 +853,7 @@ public class EmailPdfController {
             configuration.setOnePagePerSheet(true);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -909,7 +911,7 @@ public class EmailPdfController {
 			double total=0.0f;
 			Boolean check = true;
 			JRPdfExporter exp = new JRPdfExporter();
-			JRXlsExporter xlsExporter = new JRXlsExporter();
+			JRXlsxExporter xlsExporter = new JRXlsxExporter();
 			List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 			
 			List<List<DeliveryReport>> list = new ArrayList<List<DeliveryReport>>();
@@ -1024,7 +1026,7 @@ public class EmailPdfController {
 	            configuration.setOnePagePerSheet(true);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration(configuration);
+	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -1081,7 +1083,7 @@ public class EmailPdfController {
 				Boolean check = true;
 				Boolean printReport = false;
 				JRPdfExporter exp = new JRPdfExporter();
-				JRXlsExporter xlsExporter = new JRXlsExporter();
+				JRXlsxExporter xlsExporter = new JRXlsxExporter();
 				
 				List<JasperPrint> listJasper = new ArrayList<JasperPrint>();
 				//List<Object> listJasper = new ArrayList<Object>();
@@ -1262,7 +1264,7 @@ public class EmailPdfController {
 		            configuration.setOnePagePerSheet(true);
 		            configuration.setDetectCellType(true);
 		            configuration.setCollapseRowSpan(false);
-		            xlsExporter.setConfiguration(configuration);
+		            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
 		            xlsExporter.exportReport();
 		            
 		            String downloadFolder = context.getRealPath("/WEB-INF/");
