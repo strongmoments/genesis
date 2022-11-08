@@ -14,6 +14,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -72,7 +73,8 @@ public class PrintPdfController {
 		 @PathVariable("fileType") String fileType, 
 		 @PathVariable("invoiceNo") String invoiceNo) throws JRException, IOException {
 	 logger.info("common downloader() called.");
-	 JRXlsExporter xlsExporter = new JRXlsExporter();
+	 JRXlsxExporter xlsExporter = new JRXlsxExporter();
+	// JRXlsExporter xlsExporter = new JRXlsExporter();
 	 List<CommonBilling> listCommon = new ArrayList<CommonBilling>();
 	 List<Billing> data = billingRepo.getBillDetailByInvoiceNum(invoiceNo);
 	 Double totalAmount = 0.0;
@@ -163,7 +165,7 @@ public class PrintPdfController {
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration(configuration);
+           // xlsExporter.setConfiguration(configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
