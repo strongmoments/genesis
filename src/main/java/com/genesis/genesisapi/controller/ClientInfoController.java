@@ -10,6 +10,9 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/clientInfos")
@@ -54,10 +54,21 @@ public class ClientInfoController {
     private OtherChargesRepo otherChargesRepo;
 
     @GetMapping("/")
-    public ResponseEntity<List<ClientInfo>> getAllClient(){
-        List<ClientInfo> clientInfo = clientInfoRepo.findAll();
+    public ResponseEntity<?> getAllClient(
+            @RequestParam(value ="pageNumber", defaultValue = "0") int page,
+            @RequestParam(value ="pageSize", defaultValue = "3") int size,
+            @RequestParam(value ="name", defaultValue = "") String empName){
+        Map<String, Object> response = new HashMap<>();
+
+        PageRequest pageble  = PageRequest.of(page, size);
+        Page<ClientInfo> requestedPage = clientInfoRepo.findAll(pageble);
+        response.put("totalElement", requestedPage.getTotalElements());
+        response.put("totalPage", requestedPage.getTotalPages());
+        response.put("numberOfelement", requestedPage.getNumberOfElements());
+        response.put("currentPageNmber", requestedPage.getNumber());
+        response.put("data", requestedPage.getContent());
         logger.info("Record successfully retrieved from clientInfo.");
-        return new ResponseEntity<>(clientInfo, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     @GetMapping("/searchClientTitle/{searchClientTitle}")

@@ -27,4 +27,6 @@ public interface ClientInfoRepo extends JpaRepository<ClientInfo, Long> {
 
     @Query("SELECT d FROM clientInfo d WHERE d.clientInfoId BETWEEN :fromClient AND :toClient ")
     List<ClientInfo> getClientBetweenClient(@Param("fromClient") Long fromClient,  @Param("toClient") Long toClient);
+
+
 }

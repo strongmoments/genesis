@@ -43,6 +43,7 @@ var CLIENT = function() {
         html += '</table>'
         html += '</div>'
         html += '</div>'
+        html += ' <div className = "dataTable-bottom" > <div className = "dataTable-info" id="dataTable-info-id" style="float: left;"> Showing 0  to  0  of 0 entries </div><nav id="data-pagination" class="dataTable-pagination" style="float: right"> </nav></div>'
         //'<!-- END OF WSO TABLE  -->
 
 
@@ -188,17 +189,50 @@ var CLIENT = function() {
     this.loadAllClient = function() {
 
 
-        $.ajax({
-            type: "GET",
-            contentType: "application/json",
-            url: contextPath+ "/clientInfos/",
-            dataType: 'json',
-            cache: false,
-            timeout: 600000,
-            success: function(data) {
+        $('#data-pagination').pagination({
+            dataSource: contextPath+ "/clientInfos/",
+            locator: 'data',
+            totalNumberLocator: function(response) {
+                return response.totalElement;
+            },
+            pageSize: 15,
+
+            position: 'bottom',
+            ajax: {
+                beforeSend: function() {
+                    $("#cardTable").empty();
+                    $("#cardTable").append('<tr><td></td> <td></td> <td></td><td><div class="spinner-border" role="status">' +
+                        '                <span class="visually-hidden">Loading...</span>' +
+                        '              </div></td><tr>');
+                }
+            },
+            callback: function(obj, pagination) {
+                var from =pagination.pageNumber;
+
+                if(pagination.pageNumber >1){
+                    from = pagination.pageNumber * pagination.pageSize;
+                    from = (from -pagination.pageSize )+1;
+                }
+
+
+                var to = 0;
+                if(obj.length<pagination.pageSize){
+                    to =  (pagination.pageNumber * pagination.pageSize) - (pagination.pageSize-obj.length);
+                }else{
+                    to =  pagination.pageNumber * pagination.pageSize;
+                }
+
+                var info  = "Showing "+from+" to "+to+" of "+pagination.totalNumber+" entries";
+                $("#dataTable-info-id").empty();
+                $("#dataTable-info-id").append(info);
+
+                $("#cardTable").empty();
                 $("#wsoMainContent").empty();
                 $("#wsoMainContent").append('<div class="table-responsive"><table class="table"><thead><tr style="background-color:#e8e4e469;"><th></th><th>Client Name</th><th style="width:300px;">Address</th><th>City</th><th>State</th><th>Country</th></tr></thead><tbody id="wsoTableId"></tbody></table></div>');
                 $("#wsoTableId").empty();
+                // template method of yourself
+                var data = obj;
+
                 var tr = "";
                 for (var i = 0; i < data.length; i++) {
                     var clientTitle = data[i].clientTitle;
@@ -223,15 +257,9 @@ var CLIENT = function() {
                 }
                 $("#wsoTableId").append(tr);
 
-            },
-            error: function(e) {
-                var json = "<h4>Ajax Response</h4><pre>" +
-                    e.responseText + "</pre>";
-                $('#feedback').html(json);
-                console.log("ERROR : ", e);
-            }
-        });
 
+            }
+        })
 
     }
 
