@@ -129,48 +129,77 @@ function countDetails(){
 }
 
 function loadAllClient(){
-    $.ajax({
-        type: "GET",
-        contentType: "application/json",
-        url: contextPath+ "/clientInfos/",
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-            $("#clientDetails").empty();
-            var tr="";
-            for(var i=0; i<data.length; i++){
-            
-                var clientTitle = data[i].clientTitle;
-                var clientAddress1   = data[i].clientAddress1 ;
-                //clientAddress1  = escape(clientAddress1);
-                clientAddress1 = unescape(clientAddress1);
-                var clientCity   = data[i].clientCity ;
-                var clientState   = data[i].clientState ;
-                var clientCountry   = data[i].clientCountry ;
-                var clientMobileNo   = data[i].contactPersonMobileNumbere ;
-                tr += "<tr>";
-                tr += "<td>"+
-                    '<a href="#" style="font-size:20px;" onclick="home.loadClientTallySheets(\''+data[i].clientInfoId+'\')" ><i class="fa fa-search-plus"></i></a>'+
-                    "</td>"+
+    $('#data-pagination').pagination({
+        dataSource: contextPath+ "/clientInfos/",
+        locator: 'data',
+        totalNumberLocator: function(response) {
+            return response.totalElement;
+        },
+        pageSize: 10,
 
-                    "<td style='width: 200px;'>"+clientTitle+"</td> <td style='width: 300px;'> "+clientAddress1+" </td> <td style='width: 200px;'> "+clientCity+"</td> <td style='width: 200px;'> "+clientState+" </td> <td style='width: 200px;'> "+clientCountry+" </td> <td style='width: 200px;'> "+clientMobileNo+" </td> ";
+        position: 'bottom',
+        ajax: {
+            beforeSend: function() {
+                $("#clientDetails").empty();
+                $("#clientDetails").append('<tr><td></td> <td></td> <td></td><td><div class="spinner-border" role="status">' +
+                    '                <span class="visually-hidden">Loading...</span>' +
+                    '              </div></td><tr>');
+            }
+        },
+        callback: function(obj, pagination) {
+            var from =pagination.pageNumber;
+
+            if(pagination.pageNumber >1){
+                from = pagination.pageNumber * pagination.pageSize;
+                from = (from -pagination.pageSize )+1;
+            }
+
+
+            var to = 0;
+            if(obj.length<pagination.pageSize){
+                to =  (pagination.pageNumber * pagination.pageSize) - (pagination.pageSize-obj.length);
+            }else{
+                to =  pagination.pageNumber * pagination.pageSize;
+            }
+
+            var info  = "Showing "+from+" to "+to+" of "+pagination.totalNumber+" entries";
+            $("#dataTable-info-id").empty();
+            $("#dataTable-info-id").append(info);
+
+            $("#cardTable").empty();
+            $("#wsoMainContent").empty();
+            $("#wsoMainContent").append('<div class="table-responsive"><table class="table"><thead><tr style="background-color:#e8e4e469;"><th></th><th>Client Name</th><th style="width:300px;">Address</th><th>City</th><th>State</th><th>Country</th></tr></thead><tbody id="wsoTableId"></tbody></table></div>');
+            $("#clientDetails").empty();
+            // template method of yourself
+            var data = obj;
+
+            var tr = "";
+            for (var i = 0; i < data.length; i++) {
+                var clientTitle = data[i].clientTitle;
+                var clientAddress1 = data[i].clientAddress1;
+                clientAddress1 = unescape(clientAddress1);
+                var clientCity = data[i].clientCity;
+                var clientState = data[i].clientState;
+                var clientCountry = data[i].clientCountry;
+                tr += "<tr>";
+                tr += "<td><a href='#' onclick='client.editClientInfo(\"" + data[i].clientInfoId + "\")'  style='font-size:20px;' data-toggle='modal' data-target='#dynamicModel1' ><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;" +
+
+                    '<a href="#" style="font-size:20px;" onclick="client.loadClientStoragesss(\'' + data[i].clientInfoId + '\',\'' + clientTitle + '\')" >' +
+                    "<i class='fa fa-search-plus '></i></a>&nbsp;&nbsp;</td>" +
+                    /*"<a href='#' style='font-size:20px; color:#ff4444;'><i class='fa fa-trash-o'></i></a></td>"+
+                     */
+                    "<td>" + clientTitle + "</td> <td> <p>" + clientAddress1 + "</p> </td> <td> " + clientCity + "</td> <td> " + clientState + " </td> <td> " + clientCountry + " </td> ";
                 tr += "</tr>";
-                tr += "<tr id='tallysheet"+data[i].clientInfoId+"' style='display:none;' class='viewTallysheetDetailscls'><td colspan='11'> ";
-                tr +='<div style="background:##b1b1b112;width:95%;margin: 0 auto;">'
-                tr += '<div class="table-responsive"><table class="table" ><thead><tr style="background-color: #b1b1b112;"><th>Action</th> <th>Tallysheet No</th> <th>Storage Date</th>  <th> ExVessel</th><th>Measurement</th></tr></thead><tbody id="tallyTableDetail'+data[i].clientInfoId+'"></tbody></table></div></div>';
+                tr += "<tr id='wsoLot" + data[i].clientInfoId + "' style='display:none;' class='viewLotsDetailscls'><td colspan='11'> ";
+                tr += '<div style="background:##b1b1b112;width:95%;margin: 0 auto;">'
+                tr += '<div class="table-responsive"><table class="table" ><thead><tr><td colspan="10"><a href="#demo" class="btn btn-info wsoAndlot" style="float:right;" data-toggle="modal" data-target="#dynamicModel" onclick="client.openClientStoragePopu(\'' + data[i].clientInfoId + '\',\'\' ,\'' + data[i].clientTitle + '\')"> Add New Storage</a></td></tr><tr style="background-color: #b1b1b112;"><th>Action</th> <th>Storage Type</th> <th>Storage Start Date</th>  <th> Storage End Date</th><th> Monthly Rate</th><th>Handling Charges</th><th>Next Bill Date </th><th>Last Bill Date</th></tr></thead><tbody id="wsoLoTableDteail' + data[i].clientInfoId + '"></tbody></table></div></div>';
                 tr += " </td> </tr>"
             }
             $("#clientDetails").append(tr);
 
-        },
-        error: function (e) {
-            var json = "<h4>Ajax Response</h4><pre>"
-                + e.responseText + "</pre>";
-            $('#feedback').html(json);
-            console.log("ERROR : ", e);
+
         }
-    });
+    })
 
 }
 

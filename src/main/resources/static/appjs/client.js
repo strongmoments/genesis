@@ -195,7 +195,7 @@ var CLIENT = function() {
             totalNumberLocator: function(response) {
                 return response.totalElement;
             },
-            pageSize: 15,
+            pageSize: 10,
 
             position: 'bottom',
             ajax: {

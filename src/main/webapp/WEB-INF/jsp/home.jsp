@@ -420,7 +420,9 @@ long LoggedSno = (long) sessionsa.getAttribute("sno");
 													</tbody>
 												</table>
 											</div>
+
 										</div>
+										<div className = "dataTable-bottom" > <div className = "dataTable-info" id="dataTable-info-id" style="float: left;"> Showing 0  to  0  of 0 entries </div><nav id="data-pagination" class="dataTable-pagination" style="float: right"> </nav></div>
 										<div class="modal fade" id="dynamicModel" role="dialog" tabindex="-1">
 											<div class="modal-dialog">
 												<div class="modal-content">
