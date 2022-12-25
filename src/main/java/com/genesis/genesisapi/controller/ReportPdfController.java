@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.export.XlsxReportConfiguration;
+import net.sf.jasperreports.export.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -55,9 +55,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.data.JRMapArrayDataSource;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -175,11 +172,11 @@ public class ReportPdfController {
 		if(fileType.equals("xls")){
 			xlsExporter.setExporterInput(new SimpleExporterInput(print));
             xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(new File(reportName+".xls")));
-            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
+            xlsExporter.setConfiguration(configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -281,11 +278,11 @@ public class ReportPdfController {
 		if(fileType.equals("xls")){
 			xlsExporter.setExporterInput(new SimpleExporterInput(print));
             xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(new File(reportName+".xls")));
-            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
+            xlsExporter.setConfiguration(configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -402,11 +399,11 @@ public class ReportPdfController {
 		if(fileType.equals("xls")){
 			xlsExporter.setExporterInput(new SimpleExporterInput(print));
             xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(new File(reportName+".xls")));
-            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
+            xlsExporter.setConfiguration(configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");

@@ -3,6 +3,8 @@ package com.genesis.genesisapi.repository;
 import com.genesis.genesisapi.model.ClientInfo;
 import com.genesis.genesisapi.model.DeliveryList;
 import com.genesis.genesisapi.model.WSOInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,7 +27,11 @@ public interface DeliveryListRepo extends JpaRepository<DeliveryList,Long> {
 
     @Query("select d from deliveryList d where d.clientInfo.clientInfoId = ?1 order by d.dlNo asc")
     List<DeliveryList> findDlByClientInfoClientInfoId(Long clientInfoId);
-    
+
+    Page<DeliveryList> findAllByClientInfo(ClientInfo clientInfo, PageRequest pageble);
+
+
+
     @Query("select nameOfReceiver from deliveryList d where d.clientInfo.clientInfoId = ?1")
     List<DeliveryList> findNameOfReceiverByClientInfoClientInfoId(Long clientId);
     
@@ -34,6 +40,8 @@ public interface DeliveryListRepo extends JpaRepository<DeliveryList,Long> {
 
     @Query("select d  from deliveryList d order by d.dlNo desc")
     List<DeliveryList> findTop1ByOrderByOutgoingInventoryIdDesc();
+
+    //public Integer countAllByOutgoingInventoryId();
     
     @Query("Select t from deliveryList t where t.outgoingInventoryId = :id ")
     List<DeliveryList> findWsoByDeliveryList(@Param("id") Long deliveryId);

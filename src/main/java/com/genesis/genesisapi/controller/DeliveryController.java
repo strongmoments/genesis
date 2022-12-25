@@ -19,6 +19,9 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -116,18 +119,19 @@ public class DeliveryController {
     	JSONArray jarray  = new JSONArray();
     	ArrayList<Long> al = new ArrayList<Long>();
     	if("".equalsIgnoreCase(dlNo)){
-    	    List<DeliveryList> dInfo = deliveryListRepo.findTop1ByOrderByOutgoingInventoryIdDesc();
-    	    for(DeliveryList model : dInfo) {
+            PageRequest pageble  = PageRequest.of(0, 1, Sort.by("outgoingInventoryId").descending());
+            Page<DeliveryList>   dInfo = deliveryListRepo.findAll(pageble);
+    	    /*for(DeliveryList model : dInfo) {
     	    	String[] tokens = model.getDlNo().split("D00000");
     	    	al.add(Long.valueOf(tokens[tokens.length-1]));
     	    }
-    	    Collections.sort(al);
+    	    Collections.sort(al);*/
     		//dlNo = "DL-"+System.currentTimeMillis();
             if(dInfo != null) {
                 /*String wsoNo = al.get(0).getDlNo();
                 String[] arr = wsoNo.split("D");
                 int val= Integer.parseInt(arr[1])+1;*/
-            	Long val = al.get(al.size()-1)+1;
+            	Long val = dInfo.getContent().get(0).getOutgoingInventoryId()+1;
                 dlNo = "D00000"+val;
             }else {
                 dlNo = "D000001";
@@ -248,7 +252,11 @@ public class DeliveryController {
     @GetMapping("/clientDl/{clientId}")
     public JSONObject findListOfGetDlByClientId(@PathVariable Long clientId){
         System.out.println("calling......");
-        List<DeliveryList> deliveryList = deliveryListRepo.findDlByClientInfoClientInfoId(clientId);
+         ClientInfo clientInfo = new ClientInfo();
+         clientInfo.setClientInfoId(clientId);
+        PageRequest pageble  = PageRequest.of(0, 50, Sort.by("outgoingInventoryId").descending());
+        Page<DeliveryList> dataList= deliveryListRepo.findAllByClientInfo(clientInfo,pageble);
+        List<DeliveryList> deliveryList = dataList.getContent();
         JSONObject  responsejson  = new JSONObject();
         JSONArray list = new  JSONArray();
         ArrayList<Long> al = new ArrayList<Long>();

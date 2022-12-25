@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.export.XlsxReportConfiguration;
+import net.sf.jasperreports.export.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContext;
@@ -68,9 +68,6 @@ import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 
 @Controller
 @RequestMapping("/download")
@@ -351,13 +348,13 @@ public class ReportsPdfController {
         	xlsExporter.setExporterInput(new SimpleExporterInput(p1));
             xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(new File(reportName+".xls")));
             //xlsExporter.setParameter(JRXlsExporterParameter.SHEET_NAMES, "Page 1");
-            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             //configuration.setSheetNames(sheetName);
             configuration.setRemoveEmptySpaceBetweenRows(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
+            xlsExporter.setConfiguration(configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -519,11 +516,11 @@ public class ReportsPdfController {
         	//xlsExporter.setExporterInput(SimpleExporterInput.getInstance(listJasper));
         	xlsExporter.setExporterInput(new SimpleExporterInput(p1));
             xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(new File(reportName+".xls")));
-            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
             configuration.setOnePagePerSheet(false);
             configuration.setDetectCellType(true);
             configuration.setCollapseRowSpan(false);
-            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
+            xlsExporter.setConfiguration(configuration);
             xlsExporter.exportReport();
             
             String downloadFolder = context.getRealPath("/WEB-INF/");
@@ -748,11 +745,11 @@ public class ReportsPdfController {
 	        	//xlsExporter.setExporterInput(SimpleExporterInput.getInstance(listJasper));
 	        	xlsExporter.setExporterInput(new SimpleExporterInput(p1));
 	            xlsExporter.setExporterOutput(new SimpleOutputStreamExporterOutput(new File(reportName+".xls")));
-	            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();
+	            SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
 	            configuration.setOnePagePerSheet(false);
 	            configuration.setDetectCellType(true);
 	            configuration.setCollapseRowSpan(false);
-	            xlsExporter.setConfiguration((XlsxReportConfiguration) configuration);
+	            xlsExporter.setConfiguration(configuration);
 	            xlsExporter.exportReport();
 	            
 	            String downloadFolder = context.getRealPath("/WEB-INF/");
