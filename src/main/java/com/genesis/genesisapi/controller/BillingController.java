@@ -8,6 +8,7 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,6 +99,9 @@ public class BillingController {
     
     @Autowired
     private PaymentRepo paymentRepo;
+
+	@Value("${current.gst}")
+	private String gstFromConfiguratin;
 
     @GetMapping("/")
     public List<Billing> fingAllBilling(){
@@ -305,12 +309,12 @@ public class BillingController {
 			@RequestParam(value = "toClientInfo",required = false) Integer toClientInfo,
 			@RequestParam(value = "billType",required = false) String billType){
     	
-	   List<WarehouseInfo> dataList  = warehouseInfoRepo.findAll();
+	 //  List<WarehouseInfo> dataList  = warehouseInfoRepo.findAll();
 	   Map<Long,String> invoiceMap = new HashMap<Long,String>();
-       float gst  = 7;
-       if(null != dataList && !dataList.isEmpty()){
+       float gst  = Float.parseFloat(gstFromConfiguratin);
+       /*if(null != dataList && !dataList.isEmpty()){
        	gst  = dataList.get(0).getApplicableGst();
-       }
+       }*/
     	List<Billing> blingList = new ArrayList<Billing>();
     	Long fromClientId = Long.valueOf(fromClientInfo);
     	Long toClientId = Long.valueOf(toClientInfo);

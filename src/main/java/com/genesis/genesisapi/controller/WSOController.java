@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -64,7 +65,9 @@ public class WSOController {
     
     @Autowired
     private LotInfoRepo lotInfoRepo;
-    
+
+    @Value("${current.gst}")
+    private String gstFromConfiguratin;
     
 
     @GetMapping("/")
@@ -151,11 +154,11 @@ public class WSOController {
 
     @PostMapping("/")
     public WSOInfo saveWSOInfo(@RequestBody WSOInfo wsoInfo){
-    	List<WarehouseInfo> dataList  = warehouseInfoRepo.findAll();
-        float gst  = 7;
-        if(null != dataList && !dataList.isEmpty()){
+    	//List<WarehouseInfo> dataList  = warehouseInfoRepo.findAll();
+        float gst  = Float.parseFloat(gstFromConfiguratin);
+        /*if(null != dataList && !dataList.isEmpty()){
         	gst  = dataList.get(0).getApplicableGst();
-        }
+        }*/
     	
         String tranWsoWt = wsoInfo.getTransWsoWt();
         Float totalWsoWeight = Float.valueOf(tranWsoWt);
