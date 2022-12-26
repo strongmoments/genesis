@@ -254,8 +254,8 @@ public class DeliveryController {
         System.out.println("calling......");
          ClientInfo clientInfo = new ClientInfo();
          clientInfo.setClientInfoId(clientId);
-        PageRequest pageble  = PageRequest.of(0, 50, Sort.by("outgoingInventoryId").descending());
-        Page<DeliveryList> dataList= deliveryListRepo.findAllByClientInfo(clientInfo,pageble);
+        PageRequest pageble  = PageRequest.of(0, 30, Sort.by("dateOfDelivery").descending());
+        Page<DeliveryList> dataList= deliveryListRepo.findTop50DlByClientId(clientId,pageble);
         List<DeliveryList> deliveryList = dataList.getContent();
         JSONObject  responsejson  = new JSONObject();
         JSONArray list = new  JSONArray();

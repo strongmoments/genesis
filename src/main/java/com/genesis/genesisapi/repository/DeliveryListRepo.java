@@ -28,7 +28,11 @@ public interface DeliveryListRepo extends JpaRepository<DeliveryList,Long> {
     @Query("select d from deliveryList d where d.clientInfo.clientInfoId = ?1 order by d.dlNo asc")
     List<DeliveryList> findDlByClientInfoClientInfoId(Long clientInfoId);
 
+    @Query("select d from deliveryList d where d.clientInfo.clientInfoId = ?1 group by d.dlNo")
+    Page<DeliveryList> findTop50DlByClientId(Long clientInfoId,PageRequest pageRequest);
+
     Page<DeliveryList> findAllByClientInfo(ClientInfo clientInfo, PageRequest pageble);
+
 
 
 
